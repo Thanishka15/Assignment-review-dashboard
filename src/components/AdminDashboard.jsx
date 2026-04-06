@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import ProgressBar from './ProgressBar'
+import RevealOnScroll from './RevealOnScroll'
 
 const emptyForm = {
   title: '',
@@ -108,7 +108,8 @@ function AdminDashboard({
 
   return (
     <section className="space-y-6">
-      <div className="grid gap-4 xl:grid-cols-[1.3fr_1fr]">
+      <RevealOnScroll>
+        <div className="grid gap-4 xl:grid-cols-[1.3fr_1fr]">
         <div className="rounded-3xl border border-fuchsia-400/25 bg-gradient-to-br from-fuchsia-500/20 via-slate-900 to-slate-950 p-5">
           <p className="text-xs uppercase tracking-[0.2em] text-fuchsia-200">Control Deck</p>
           <h2 className="mt-2 text-2xl font-semibold text-white">{admin.name}&apos;s Admin Hub</h2>
@@ -127,9 +128,11 @@ function AdminDashboard({
             Restore demo dataset
           </button>
         </div>
-      </div>
+        </div>
+      </RevealOnScroll>
 
-      <div className="grid gap-4 xl:grid-cols-2">
+      <RevealOnScroll>
+        <div className="grid gap-4 xl:grid-cols-2">
         <div className="rounded-3xl border border-white/10 bg-slate-900/75 p-5">
           <h3 className="mb-3 text-lg font-semibold text-white">Create assignment</h3>
           <form onSubmit={submitForm} className="grid gap-3 md:grid-cols-2">
@@ -243,23 +246,11 @@ function AdminDashboard({
             ))}
           </div>
         </div>
-      </div>
-
-      <div className="rounded-3xl border border-white/10 bg-slate-900/75 p-5">
-        <h2 className="mb-3 text-lg font-semibold text-white">Submission radar</h2>
-        <div className="space-y-3">
-          {studentProgress.map((student) => (
-            <div key={student.id} className="rounded-xl border border-white/10 bg-slate-950/40 p-3">
-              <p className="mb-2 text-sm font-medium text-slate-200">
-                {student.name} ({student.submittedCount}/{student.assignedCount})
-              </p>
-              <ProgressBar value={student.progress} label="Submitted assignments" />
-            </div>
-          ))}
         </div>
-      </div>
+      </RevealOnScroll>
 
-      <div className="rounded-3xl border border-white/10 bg-slate-900/75 p-5">
+      <RevealOnScroll>
+        <div className="rounded-3xl border border-white/10 bg-slate-900/75 p-5">
         <h2 className="mb-3 text-lg font-semibold text-white">Manage assignments</h2>
         <div className="space-y-3">
           {ownAssignments.map((assignment) => (
@@ -297,7 +288,32 @@ function AdminDashboard({
             <p className="text-sm text-slate-400">No assignments created yet.</p>
           )}
         </div>
-      </div>
+        </div>
+      </RevealOnScroll>
+
+      <RevealOnScroll>
+        <div className="rounded-3xl border border-white/10 bg-slate-900/75 p-5">
+        <h2 className="mb-3 text-lg font-semibold text-white">Submission overview</h2>
+        <div className="space-y-3">
+          {studentProgress.map((student) => (
+            <div
+              key={student.id}
+              className="flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/40 p-3"
+            >
+              <p className="text-sm font-medium text-slate-200">{student.name}</p>
+              <div className="flex items-center gap-2">
+                <span className="rounded-lg border border-indigo-400/30 bg-indigo-500/10 px-2 py-1 text-xs text-indigo-200">
+                  Assigned: {student.assignedCount}
+                </span>
+                <span className="rounded-lg border border-emerald-400/30 bg-emerald-500/10 px-2 py-1 text-xs text-emerald-200">
+                  Submitted: {student.submittedCount}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        </div>
+      </RevealOnScroll>
     </section>
   )
 }

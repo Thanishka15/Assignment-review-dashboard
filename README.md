@@ -115,7 +115,5 @@ assignment-review-dashboard/
 - Output directory: `dist`
 
 ## Notes
-
-- This is frontend-only by design (as requested).
 - `localStorage` is used to persist progress without any backend service.
 
